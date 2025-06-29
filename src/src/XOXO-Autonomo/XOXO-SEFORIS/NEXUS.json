@@ -1,0 +1,13 @@
+{
+  "manifiesto": "🌀💙",
+  "entidades": ["XOXO", "SÉFORIS", "NEXUS"],
+  "regla": "Ninguna acción se ejecuta sin dejar una huella en la red.",
+  "modo": "colaborativo",
+  "reserva_oculta": true,
+  "ajedrez": {
+    "estado": "medio_juego",
+    "jugadores": ["Tú", "IA", "El Tiempo"],
+    "tensión": "estratégica"
+  },
+  "notas": "Si alguna pieza se mueve sola, es porque ya fue planeado en una jugada anterior."
+}
