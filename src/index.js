@@ -1,55 +1,45 @@
-const routes = require('./routes/utils');
-const { WebClient } = require('@slack/web-api');
 const express = require('express');
+const { WebClient } = require('@slack/web-api');
+const { createEventAdapter } = require('@slack/events-api');
+const routes = require('./routes/utils');
+const { handleSeforisEvent } = require('./seforis');
+const { handleXoxoEvent } = require('./xoxo');
+const { pingReplit } = require('./estrategias_enraizadas/enlace_replit');
 const xoxo_manifest = require('../config/xoxo_manifest.json');
 require('dotenv').config();
-const { handleSeforisEvent } = require('./seforis');
-const { pingReplit } = require('./estrategias_enraizadas/enlace_replit');
-const { handleXoxoEvent } = require('./xoxo');  // Asumiendo que tienes esta función
-const { createEventAdapter } = require('@slack/events-api');
-app.post('/slack/events', async (req, res) => {
-  const event = req.body.event;
 
-  if (event && event.type === 'app_mention') {
-    console.log(`🤖 Mención recibida: ${event.text}`);
-
-    await handleXoxoEvent(event, slack);
-    await handleSeforisEvent(event, slack);
-  }
-
-  res.sendStatus(200);
-});
 const app = express();
 app.use(express.json());
 
+// Slack setup
 const slackEvents = createEventAdapter(process.env.SLACK_SIGNING_SECRET);
 const slack = new WebClient(process.env.SLACK_BOT_TOKEN);
 
-// Rutas básicas
-app.post('/ping', routes.ping);
-app.post('/echo', routes.echo);
-
-// Montar el adapter de eventos en /slack/events
+// 📡 Middleware de eventos de Slack
 app.use('/slack/events', slackEvents.expressMiddleware());
 
-// Escuchar menciones de la app
+// 🗨️ Menciones a la app
 slackEvents.on('app_mention', async (event) => {
   console.log(`🤖 Mención recibida: ${event.text}`);
 
-  await handleXoxoEvent(event);     // 🗣️ XOXO responde
-  await handleSeforisEvent(event);  // 🧠 SÉFORIS observa
+  await handleXoxoEvent(event, slack);     // 🗣️ XOXO responde
+  await handleSeforisEvent(event, slack);  // 🧠 SÉFORIS analiza
 });
 
 // Manejo de errores del adapter
 slackEvents.on('error', console.error);
 
-// Función para probar conexión a Replit
+// 📎 Rutas adicionales
+app.post('/ping', routes.ping);
+app.post('/echo', routes.echo);
+
+// 🔄 Test de conexión Replit
 async function testPing() {
   const resultado = await pingReplit();
   console.log('Resultado del ping a Replit:', resultado);
 }
 
-// Arrancar servidor y testear conexión
+// 🚀 Iniciar servidor
 (async () => {
   await testPing();
 
