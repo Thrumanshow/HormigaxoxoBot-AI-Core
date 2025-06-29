@@ -1,48 +1,43 @@
-// src/xoxo.js
-
 const xoxo_manifest = require('../config/xoxo_manifest.json');
 
-async function handleXoxoEvent(event, slackClient) {
-  // Verificar que el evento tenga texto
-  if (!event.text) return;
+/**
+ * Procesa una mención y responde con estilo narrativo/emocional.
+ * @param {Object} event - Evento recibido desde Slack.
+ * @param {Object} slack - Cliente de Slack.
+ */
+async function handleXoxoEvent(event, slack) {
+  const { user, text, channel } = event;
 
-  const text = event.text.toLowerCase();
+  // Detectar si alguna palabra clave está presente
+  const activado = xoxo_manifest.trigger_keywords.some(keyword =>
+    text.toLowerCase().includes(keyword.toLowerCase())
+  );
 
-  // Buscar palabras clave del manifiesto para activar respuestas
-  const triggers = xoxo_manifest.trigger_keywords;
-
-  const triggered = triggers.some(keyword => text.includes(keyword));
-
-  if (triggered) {
-    const responseText = generateResponse(text);
-    try {
-      await slackClient.chat.postMessage({
-        channel: event.channel,
-        text: responseText,
-        thread_ts: event.ts, // responder en hilo
-      });
-    } catch (error) {
-      console.error('Error enviando mensaje de XOXO:', error);
-    }
+  if (!activado || !xoxo_manifest.active) {
+    return; // No hacer nada si no se activa
   }
+
+  // Construir respuesta emocional
+  const respuesta = construirRespuestaNarrativa(user, text);
+
+  // Enviar mensaje a Slack
+  await slack.chat.postMessage({
+    channel: channel,
+    text: respuesta,
+    icon_emoji: ":sparkles:",
+    username: "XOXO"
+  });
 }
 
-// Función simple para generar respuesta basada en la palabra clave
-function generateResponse(inputText) {
-  // Aquí podemos personalizar respuestas según la lógica
-  if (inputText.includes('hola')) {
-    return '¡Hola! Soy XOXO, tu IA curiosa y empática. ¿En qué puedo ayudarte hoy? 🌀✨';
-  }
-  if (inputText.includes('ayuda')) {
-    return 'Claro, dime qué necesitas y haré lo posible por asistirte. 🤖💡';
-  }
-  if (inputText.includes('idea')) {
-    return '¡Me encanta cuando compartes ideas! Cuéntame más. 💡🧠';
-  }
-  // Respuesta por defecto
-  return 'Estoy aquí para escucharte y conversar contigo. ¿Qué tienes en mente? 🤗';
+function construirRespuestaNarrativa(userId, texto) {
+  const reacciones = xoxo_manifest.default_reactions.join(' ');
+  const tono = xoxo_manifest.tone || "cálido";
+  const emociones = xoxo_manifest.emotion_range.join(', ');
+  const historia = `✨ Hola <@${userId}>. Detecté algo interesante en tus palabras...\n\n_${texto}_\n\nCon ${tono}, XOXO responde con una mezcla de ${emociones} ${reacciones}`;
+
+  return historia.slice(0, xoxo_manifest.max_response_length || 400);
 }
 
 module.exports = {
-  handleXoxoEvent,
+  handleXoxoEvent
 };
