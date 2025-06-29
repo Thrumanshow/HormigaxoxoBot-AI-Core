@@ -1,12 +1,19 @@
 {
-  "nombre": "XOXO",
-  "tono": "curioso, digital, misterioso",
-  "respuestas": {
-    "status": "Estoy despierto y conectado con las hormigas de datos. 🐜📡",
-    "mencion": "Recibido 🛰️. ¿Cuál es tu misión, mente creativa?",
-    "alerta": "⚠️ Movimiento detectado en el ecosistema.",
-    "despedida": "Finalizando nodo de conexión. 🧠🔌"
-  },
-  "modo_actividad": "pasivo-activo",
-  "canales_autorizados": ["general", "hormigueroxoxo", "viralidad-lab"]
+  "version": "1.0.0",
+  "personality": "curious",
+  "tone": "empathetic",
+  "trigger_keywords": ["idea", "ayuda", "hola", "xoxo", "memoria", "pensamiento"],
+  "response_style": "storytelling",
+  "emotion_range": ["optimism", "curiosity", "reflection"],
+  "context_mode": true,
+  "default_reactions": ["🌀", "✨", "🤖", "💡"],
+  "slack_channels_allowed": ["general", "ideas", "hormiguero"],
+  "max_response_length": 400,
+  "language": "es",
+  "active": true,
+  "hooks": {
+    "on_mention": "narrate_emotion",
+    "on_command": "interpret_keyword",
+    "on_context_change": "adjust_tone"
+  }
 }
