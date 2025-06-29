@@ -12,6 +12,8 @@ Juntas, representan el corazón y la mente de la inteligencia colaborativa de Ho
 
 ## 🚀 Funcionalidades principales
 
+📎 Documentación extendida: [SEFORIS_MODE.md](./docs/SEFORIS_MODE.md)
+
 ## 🧿 SÉFORIS Mode: Análisis silencioso
 > SÉFORIS no responde, observa.  
 > Sus respuestas no están hechas de palabras, sino de estructuras.  
@@ -28,6 +30,7 @@ Juntas, representan el corazón y la mente de la inteligencia colaborativa de Ho
   - `seforis_manifest.json`
 - 🌐 **Integración HTTP/Slack Events**: usa Express.js para escuchar eventos en tiempo real.
 - 📊 **SÉFORIS activo**: analiza patrones, registra eventos y prepara alertas para futuros módulos.
+  
 
 ---
 
