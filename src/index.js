@@ -7,7 +7,18 @@ const { handleSeforisEvent } = require('./seforis');
 const { pingReplit } = require('./estrategias_enraizadas/enlace_replit');
 const { handleXoxoEvent } = require('./xoxo');  // Asumiendo que tienes esta función
 const { createEventAdapter } = require('@slack/events-api');
+app.post('/slack/events', async (req, res) => {
+  const event = req.body.event;
 
+  if (event && event.type === 'app_mention') {
+    console.log(`🤖 Mención recibida: ${event.text}`);
+
+    await handleXoxoEvent(event, slack);
+    await handleSeforisEvent(event, slack);
+  }
+
+  res.sendStatus(200);
+});
 const app = express();
 app.use(express.json());
 
