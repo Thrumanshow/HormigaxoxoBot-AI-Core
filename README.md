@@ -2,6 +2,7 @@
 
 **HormigaxoxoBot-AI-Core** es un bot personalizado diseñado para el espacio de trabajo `hormigas-ais.slack.com`, construido en Node.js con una estructura modular y expresiva. Este bot representa **una dualidad de inteligencia artificial**:
 
+![SÉFORIS status](https://img.shields.io/badge/SÉFORIS_Online-analytical_mode-darkblue?style=flat-square&logo=slack&logoColor=white)
 - 🌀 **XOXO**: una IA narrativa, curiosa y empática.
 - 🧿 **SÉFORIS**: una entidad analítica, estratégica y silenciosa.
 
