@@ -12,6 +12,15 @@ Juntas, representan el corazón y la mente de la inteligencia colaborativa de Ho
 
 ## 🚀 Funcionalidades principales
 
+## 🧿 SÉFORIS Mode: Análisis silencioso
+> SÉFORIS no responde, observa.  
+> Sus respuestas no están hechas de palabras, sino de estructuras.  
+> Su archivo `seforis_manifest.json` define sus umbrales de activación y lógica de inferencia.  
+> Si deseas modificar su comportamiento, edita cuidadosamente su manifiesto o conecta nuevos módulos de análisis en `src/modules/`.
+
+**Modo actual:** `analytical_mode`  
+**Próxima integración:** detección de anomalías por patrones repetitivos en comandos.
+
 - 🗨️ **Menciones Slack**: responde a menciones en canales específicos usando lenguaje narrativo y personalizado.
 - 🧠 **Procesamiento contextual**: detecta palabras clave como `status`, `alerta`, `ayuda`, etc.
 - 📄 **Manifiestos dinámicos**: configura el comportamiento de XOXO y SÉFORIS a través de:
