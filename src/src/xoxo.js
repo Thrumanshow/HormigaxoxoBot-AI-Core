@@ -1,11 +1,20 @@
-// src/xoxo.js
+const xoxoManifest = require('../config/xoxo_manifest.json');
 
-class XOXO {
-  async procesar(input) {
-    // Aquí va la lógica para que XOXO procese el input de forma narrativa y empática
-    // Simulación simple para ejemplo:
-    return `XOXO dice: He recibido tu mensaje y lo estoy pensando con curiosidad 🤖✨: "${input}"`;
+async function handleXoxoEvent(event) {
+  // Aquí puedes añadir la lógica para responder a menciones o eventos con XOXO
+  console.log(`XOXO procesando evento: ${event.text}`);
+
+  // Ejemplo simple: si el mensaje contiene la palabra 'hola', responde con un saludo
+  if (event.text && event.text.toLowerCase().includes('hola')) {
+    // Aquí puedes integrar la API de Slack para responder, por ejemplo.
+    console.log('XOXO dice: ¡Hola! ¿En qué puedo ayudarte?');
   }
+
+  // Puedes agregar más lógica basada en xoxoManifest, tono, personalidad, etc.
+
+  // Por ahora, solo muestra en consola.
 }
 
-module.exports = XOXO;
+module.exports = {
+  handleXoxoEvent,
+};
