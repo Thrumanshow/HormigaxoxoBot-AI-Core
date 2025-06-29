@@ -1,8 +1,10 @@
+const routes = require('./routes/utils');
 const { WebClient } = require('@slack/web-api');
 const express = require('express');
 const xoxo_manifest = require('../config/xoxo_manifest.json');
 require('dotenv').config();
-
+app.post('/ping', routes.ping);
+app.post('/echo', routes.echo);
 const app = express();
 app.use(express.json());
 
